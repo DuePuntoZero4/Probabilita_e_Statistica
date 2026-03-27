@@ -51,7 +51,6 @@ def matrice_covarianza(dati):
 
     return mat_covarianza
 #-------------------------------------------------------------------------------------------------------------------------------------------------
-#FUNZIONE CHE FA L'ANALISI DELLE COMPONENTI PRINCIPALI DEL CAMPIONE QUADRIVARIATO
 def ACP(dati, matrice):
     #Calcoliamo autovettori (direzioni lungo cui i dati variano di più) e autovalori (importanza di ogni direzione)
     autovalori, autovettori = numpy.linalg.eigh(matrice)
@@ -139,6 +138,10 @@ def salvataggio_grafico(titolo):
     #Chiudiamo la figura per liberare memoria
     plot.close()
 #-------------------------------------------------------------------------------------------------------------------------------------------------
+def varianza_campionaria(autovalori):
+    s2 = (autovalori[0] + autovalori[1])/(autovalori[0]+autovalori[1]+autovalori[2]+autovalori[3])
+    return s2*100
+#-------------------------------------------------------------------------------------------------------------------------------------------------
 #MAIN
 
 #Dati originali (liste standard)
@@ -175,5 +178,5 @@ splot_retta("Regressione Lineare: Tmin e Ptot", "Tmin (°C)", tmin, "Ptot (mm)",
 dati = numpy.array([tmin, tmed, tmax, ptot]).T
 #Calcoliamo la matrice di covarianza
 mat_covarianza = matrice_covarianza(dati)
-#Facciamo l'anutodecomposizione, l'identificazione delle due componenti principali e facciamo il diagramma di dispersione
+#Calcoliamo l'autodecomposizione della matrice di covarianza
 ACP(dati, mat_covarianza)
